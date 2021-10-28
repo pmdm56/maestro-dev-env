@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu2004"
   config.vm.define "vigor"
   config.ssh.forward_agent = true
+  config.ssh.forward_x11 = true
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "vigor"
@@ -15,6 +16,10 @@ Vagrant.configure("2") do |config|
   # Initial boilerplate config
 
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
+    # DNS fix
+    echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+
+    # Creating swap
     fallocate -l 8G /swapfile
     chmod 600 /swapfile
     mkswap /swapfile
