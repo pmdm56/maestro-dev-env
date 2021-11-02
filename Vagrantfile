@@ -3,14 +3,17 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu2004"
-  config.vm.define "vigor"
+  config.vm.define "synapse"
   config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "vigor"
     vb.gui = false
-    vb.memory = "4096"
+    # vb.memory = "4096"
+    # v.cpus = 2
+    vb.memory = "8192"
+    vb.cpus = 6
   end
 
   # Initial boilerplate config
@@ -64,5 +67,27 @@ Vagrant.configure("2") do |config|
     ./install-p4dev-v4.sh
 
     echo "export BMV2=\"/home/vagrant/vigor/p4-guide/bin/behavioral-model/\"" >> /home/vagrant/.bashrc
+  SHELL
+
+  # Setup Barefoot SDE
+
+  config.vm.provision "file", source: "./bf-sde-9.7.0.tgz", destination: "/home/vagrant/bf-sde-9.7.0.tgz"
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    sudo apt update
+    sudo apt install python3 python3-pip cmake -y
+
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+    tar xvfz bf-sde-9.7.0.tgz
+    cd bf-sde-9.7.0
+
+    echo "Y" | ./p4studio/p4studio dependencies install
+
+    ./p4studio/p4studio configure thrift-diags '^tofino2' bfrt \
+                        switch p4rt thrift-switch thrift-driver \
+                        sai '^tofino2m' '^tofino2h' bf-diags \
+                        bfrt-generic-flags grpc tofino bsp
+
+    ./p4studio/p4studio app activate >> ~/.bashrc
   SHELL
 end
