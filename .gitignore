@@ -1,2 +1,4 @@
 .vagrant
 shared
+bf-sde-9.7.0.tgz
+*.log
