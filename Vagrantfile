@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
   # Copy required files to the VM first
   #################################################################
 
+  config.vm.provision "file", source: "./patches.tgz", destination: "/home/vagrant/patches.tgz"
   config.vm.provision "file", source: "./bf-sde-9.7.0.tgz", destination: "/home/vagrant/bf-sde-9.7.0.tgz"
   config.vm.provision "file", source: "./bf-reference-bsp-9.7.0.tgz", destination: "/home/vagrant/bf-reference-bsp-9.7.0.tgz"
   config.vm.provision "file", source: "./ica-tools.tgz", destination: "/home/vagrant/ica-tools.tgz"
@@ -41,6 +42,13 @@ Vagrant.configure("2") do |config|
     mkswap /swapfile
     swapon /swapfile
     echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+    # Installing terminal sugar
+    sudo apt install zsh
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sed -i 's/^ZSH_THEME=\".*$/ZSH_THEME=\"kafeitu\"/g' ~/.zshrc
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    sed -i 's/^plugins=\(.*\)$/plugins=\(git zsh-autosuggestions\)/g' ~/.zshrc
   SHELL
 
   #################################################################
@@ -101,10 +109,12 @@ Vagrant.configure("2") do |config|
 
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
+    tar xvfz patches.tgz
     tar xvfz bf-sde-9.7.0.tgz
     tar xvfz bf-reference-bsp-9.7.0.tgz
     tar xvfz ica-tools.tgz
 
+    rm patches.tgz
     rm bf-sde-9.7.0.tgz
     rm bf-reference-bsp-9.7.0.tgz
     rm ica-tools.tgz

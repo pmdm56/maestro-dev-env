@@ -3,6 +3,7 @@
 ## Dependencies:
   * VirtualBox
   * Vagrant
+  * `patches.tgz` \*
   * `bf-sde-9.7.0.tgz` \*
   * `bf-reference-bsp-9.7.0.tgz` \*
   * `ica-tools.tgz` \*
