@@ -12,8 +12,8 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.name = "synapse"
     vb.gui = false
-    vb.memory = "8192"
-    vb.cpus = 6
+    vb.memory = "4096"
+    vb.cpus = 2
   end
 
   config.vm.synced_folder "scripts/", "/home/vagrant/scripts/", owner: "vagrant", group: "vagrant"
@@ -35,20 +35,23 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
     # DNS fix
     echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
-
+    
     # Creating swap
     fallocate -l 8G /swapfile
     chmod 600 /swapfile
     mkswap /swapfile
     swapon /swapfile
     echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-
+  SHELL
+  
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
     # Installing terminal sugar
-    sudo apt install zsh
+    sudo apt install zsh -y
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    sed -i 's/^ZSH_THEME=\".*$/ZSH_THEME=\"kafeitu\"/g' ~/.zshrc
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    sed -i 's/^plugins=\(.*\)$/plugins=\(git zsh-autosuggestions\)/g' ~/.zshrc
+    sed -i 's/^ZSH_THEME=\".*$/ZSH_THEME=\"kafeitu\"/g' /home/vagrant/.zshrc
+    git clone https://github.com/zsh-users/zsh-autosuggestions /home/vagrant/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    sed -i 's/^plugins=\(.*\)$/plugins=\(git zsh-autosuggestions\)/g' /home/vagrant/.zshrc
+    sudo chsh -s /bin/zsh vagrant
   SHELL
 
   #################################################################
