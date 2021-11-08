@@ -3,7 +3,11 @@
 ## Dependencies:
   * VirtualBox
   * Vagrant
-  * `bf-sde-9.7.0.tgz` -- this is a confidential file provided by Intel. You can access it via the [SNAP wiki](https://snaplab.2y.net/InstallingTheTofinoSDE). 
+  * `bf-sde-9.7.0.tgz` \*
+  * `bf-reference-bsp-9.7.0.tgz` \*
+  * `ica-tools.tgz` \*
+
+\* This is a confidential file provided by Intel. You can access it via the [SNAP wiki](https://snaplab.2y.net/InstallingTheTofinoSDE). 
 
 ## Scripts
 
@@ -23,3 +27,12 @@ This way, the vagrant machine can use the keys from your host to access your per
 ### Generating BDDs
 
 You can generate BDDs for every NF using this script. Just run `generate_bdds.sh` and it will create a `~/bdds` folder containing both the BDDs and the graphviz images for each NF.
+
+## Run p4 programs using the tofino model
+
+Let's consider you want to compile your p4 program named `my_program.p4`:
+
+1. `$ ~/tools/veth_setup.sh [number of virtual interfaces]`
+2. `$ ~/tools/p4_build.sh my_program.p4`
+3. `$ $SDE/run_tofino_model.sh -p my_program` (on another terminal)
+4. `$ $SDE/run_switchd.sh -p my_program` (on yet another terminal)
