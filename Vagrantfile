@@ -10,11 +10,12 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.name = "vigor"
     vb.gui = false
-    # vb.memory = "4096"
-    # v.cpus = 2
     vb.memory = "8192"
     vb.cpus = 6
   end
+
+  config.vm.synced_folder "scripts/", "/home/vagrant/scripts/",
+    owner: "vagrant", group: "vagrant"
 
   # Initial boilerplate config
 
@@ -41,6 +42,9 @@ Vagrant.configure("2") do |config|
     cd /home/vagrant/vigor
     chmod +x ./vigor/setup.sh
     ./vigor/setup.sh
+
+    # install graphviz for BDD visualization
+    sudo apt install graphviz xdot -y
   SHELL
 
   # Fix missing cil package
@@ -79,6 +83,8 @@ Vagrant.configure("2") do |config|
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
     tar xvfz bf-sde-9.7.0.tgz
+    rm bf-sde-9.7.0.tgz
+
     cd bf-sde-9.7.0
 
     echo "Y" | ./p4studio/p4studio dependencies install
