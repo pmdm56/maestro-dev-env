@@ -17,16 +17,17 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.synced_folder "scripts/", "/home/vagrant/scripts/", owner: "vagrant", group: "vagrant"
+  config.vm.synced_folder "workspace/", "/home/vagrant/workspace", create: true, owner: "vagrant", group: "vagrant"
   
   #################################################################
   # Copy required files to the VM first
   #################################################################
 
-  config.vm.provision "file", source: "./patches.tgz", destination: "/home/vagrant/patches.tgz"
-  config.vm.provision "file", source: "./bf-sde-9.7.0.tgz", destination: "/home/vagrant/bf-sde-9.7.0.tgz"
-  config.vm.provision "file", source: "./bf-reference-bsp-9.7.0.tgz", destination: "/home/vagrant/bf-reference-bsp-9.7.0.tgz"
-  config.vm.provision "file", source: "./ica-tools.tgz", destination: "/home/vagrant/ica-tools.tgz"
-  config.vm.provision "file", source: "./cil.tar.gz", destination: "/home/vagrant/cil.tar.gz"
+  config.vm.provision "file", source: "./patches.tgz", destination: "/home/vagrant/files/patches.tgz"
+  config.vm.provision "file", source: "./bf-sde-9.7.0.tgz", destination: "/home/vagrant/files/bf-sde-9.7.0.tgz"
+  config.vm.provision "file", source: "./bf-reference-bsp-9.7.0.tgz", destination: "/home/vagrant/files/bf-reference-bsp-9.7.0.tgz"
+  config.vm.provision "file", source: "./ica-tools.tgz", destination: "/home/vagrant/files/ica-tools.tgz"
+  config.vm.provision "file", source: "./cil.tar.gz", destination: "/home/vagrant/files/cil.tar.gz"
 
   #################################################################
   # Initial boilerplate config
@@ -52,6 +53,11 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/zsh-users/zsh-autosuggestions /home/vagrant/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     sed -i 's/^plugins=\(.*\)$/plugins=\(git zsh-autosuggestions\)/g' /home/vagrant/.zshrc
     sudo chsh -s /bin/zsh vagrant
+
+    echo -e "emulate sh\n. ~/.profile\nemulate zsh" > /home/vagrant/.zprofile
+    
+    echo -e "alias ws=\"cd ~/workspace\"" >> /home/vagrant/.zshrc
+    echo -e "alias vigor=\"cd ~/vigor\"" >> /home/vagrant/.zshrc
   SHELL
 
   #################################################################
@@ -59,14 +65,28 @@ Vagrant.configure("2") do |config|
   #################################################################
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    pushd /home/vagrant/workspace
+      git clone https://github.com/fchamicapereira/vigor.git
+    popd
+
     mkdir -p /home/vagrant/vigor
-    cd /home/vagrant/vigor
 
-    git clone https://github.com/fchamicapereira/vigor.git
+    pushd /home/vagrant/vigor
+      ln -s /home/vagrant/workspace/vigor vigor
+      chmod +x ./vigor/setup.sh
+      ./vigor/setup.sh .
+    popd
 
-    cd /home/vagrant/vigor
-    chmod +x ./vigor/setup.sh
-    ./vigor/setup.sh
+    pushd /home/vagrant/workspace
+      git clone https://github.com/fchamicapereira/vigor-klee.git klee
+      cd klee
+      ./build.sh
+    popd
+
+    pushd /home/vagrant/vigor
+      rm -rf klee
+      ln -s /home/vagrant/workspace/klee klee
+    popd
 
     # Install graphviz for BDD visualization
     sudo apt install graphviz xdot -y
@@ -78,8 +98,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     /home/vagrant/.opam/
-    tar -xzvf /home/vagrant/cil.tar.gz -C /home/vagrant/.opam/4.06.0/lib
-    rm /home/vagrant/cil.tar.gz
+    tar -xzvf /home/vagrant/files/cil.tar.gz -C /home/vagrant/.opam/4.06.0/lib
   SHELL
 
   #################################################################
@@ -98,7 +117,7 @@ Vagrant.configure("2") do |config|
     cd p4-guide/bin/
     ./install-p4dev-v4.sh
 
-    echo "export BMV2=\"/home/vagrant/vigor/p4-guide/bin/behavioral-model/\"" >> /home/vagrant/.bashrc
+    echo "export BMV2=\"/home/vagrant/vigor/p4-guide/bin/behavioral-model/\"" >> /home/vagrant/.zshrc
   SHELL
 
   #################################################################
@@ -112,15 +131,10 @@ Vagrant.configure("2") do |config|
 
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
-    tar xvfz patches.tgz
-    tar xvfz bf-sde-9.7.0.tgz
-    tar xvfz bf-reference-bsp-9.7.0.tgz
-    tar xvfz ica-tools.tgz
-
-    rm patches.tgz
-    rm bf-sde-9.7.0.tgz
-    rm bf-reference-bsp-9.7.0.tgz
-    rm ica-tools.tgz
+    tar xvfz /home/vagrant/files/patches.tgz -C /home/vagrant
+    tar xvfz /home/vagrant/files/bf-sde-9.7.0.tgz -C /home/vagrant
+    tar xvfz /home/vagrant/files/bf-reference-bsp-9.7.0.tgz -C /home/vagrant
+    tar xvfz /home/vagrant/files/ica-tools.tgz -C /home/vagrant
 
     cd bf-sde-9.7.0
 
@@ -137,7 +151,7 @@ Vagrant.configure("2") do |config|
     echo "export SDE=/home/vagrant/bf-sde-9.7.0" >> ~/.profile
     echo "export SDE_INSTALL=/home/vagrant/bf-sde-9.7.0/install" >> ~/.profile
     
-    ./p4studio/p4studio app activate >> ~/.bashrc
-    echo "export PATH=$SDE_INSTALL/bin:\$PATH" >> ~/.bashrc
+    ./p4studio/p4studio app activate >> ~/.zshrc
+    echo "export PATH=$SDE_INSTALL/bin:\$PATH" >> ~/.zshrc
   SHELL
 end
