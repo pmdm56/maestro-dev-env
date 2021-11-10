@@ -16,6 +16,12 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
   end
 
+  config.vm.provider "vmware_desktop" do |vb|
+    vb.gui = false
+    vb.memory = "4096"
+    vb.cpus = 2
+  end
+
   config.vm.synced_folder "scripts/", "/home/vagrant/scripts/", owner: "vagrant", group: "vagrant"
   config.vm.synced_folder "workspace/", "/home/vagrant/workspace", create: true, owner: "vagrant", group: "vagrant"
   
@@ -144,14 +150,15 @@ Vagrant.configure("2") do |config|
                         switch p4rt thrift-switch thrift-driver \
                         sai '^tofino2m' '^tofino2h' bf-diags \
                         bfrt-generic-flags grpc tofino bsp \
-                        --bsp-path=/home/vagrant/bf-reference-bsp-9.7.0.tgz
+                        --bsp-path=/home/vagrant/files/bf-reference-bsp-9.7.0.tgz
 
     ./p4studio/p4studio build
+
+    patch -s -p0 < bf-sde-pkgsrc.patch
 
     echo "export SDE=/home/vagrant/bf-sde-9.7.0" >> ~/.profile
     echo "export SDE_INSTALL=/home/vagrant/bf-sde-9.7.0/install" >> ~/.profile
     
-    ./p4studio/p4studio app activate >> ~/.zshrc
     echo "export PATH=$SDE_INSTALL/bin:\$PATH" >> ~/.zshrc
   SHELL
 end
