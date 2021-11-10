@@ -69,14 +69,14 @@ klee_new_remote="$prefix""$username"/vigor-klee.git
 # change vigor remote repository
 echo "Changing vigor remote to \"$vigor_new_remote\""
 cd $VIGOR_DIR/vigor
-git remote set-url origin $vigor_new_remote > /dev/null 2>&1
-git pull origin master > /dev/null 2>&1
+git remote set-url origin $vigor_new_remote
+git pull origin master
 
 # change KLEE remote repository
 echo "Changing KLEE remote to \"$klee_new_remote\""
 cd $KLEE_DIR
-git remote set-url origin $klee_new_remote > /dev/null 2>&1
-git pull origin master > /dev/null 2>&1
-./build.sh > /dev/null 2>&1
+git remote set-url origin $klee_new_remote
+git pull origin master
+./build.sh
 
 echo "Done!"

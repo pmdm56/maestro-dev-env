@@ -41,7 +41,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
     # DNS fix
-    echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+    sudo sed -i 's/^.*DNS=.*$/DNS=8.8.8.8 8.8.4.4/g' /etc/systemd/resolved.conf
+    sudo rm /etc/resolv.conf
+    sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    sudo service systemd-resolved restart
     
     # Creating swap
     fallocate -l 8G /swapfile
