@@ -40,7 +40,7 @@ COPY --chown=synapse:synapse ./cil.tar.gz /home/synapse/files/cil.tar.gz
 
 # Install some nice to have applications
 RUN sudo apt-get install -y man
-RUN sudo apt-get install -y build-essential wget vim tzdata
+RUN sudo apt-get install -y build-essential wget git vim tzdata
 RUN sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # Installing terminal sugar
@@ -56,9 +56,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/synapse/.zshrc
 
 # Execute the setup scripts
-RUN chmod +x /home/synapse/scripts/build-vigor.sh
-RUN chmod +x /home/synapse/scripts/build-p4.sh
-RUN chmod +x /home/synapse/scripts/build-barefoot-sde.sh
+RUN chmod +x /home/synapse/scripts/*.sh
 
 RUN /home/synapse/scripts/build-vigor.sh
 RUN /home/synapse/scripts/build-p4.sh

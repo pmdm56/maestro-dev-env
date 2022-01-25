@@ -3,8 +3,6 @@ services:
     synapse:
         build: .
         volumes:
-            - type: bind
-              source: $PWD/shared
-              target: /home/synapse/shared
+            - ./shared:/home/synapse/shared
             - ~/.ssh:/home/synapse/.ssh:ro
         tty: true
