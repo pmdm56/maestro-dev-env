@@ -8,10 +8,10 @@ sudo apt install libcli-dev -y
 
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
-tar xvfz /home/vagrant/files/patches.tgz -C /home/vagrant
-tar xvfz /home/vagrant/files/bf-sde-9.7.0.tgz -C /home/vagrant
-tar xvfz /home/vagrant/files/bf-reference-bsp-9.7.0.tgz -C /home/vagrant
-tar xvfz /home/vagrant/files/ica-tools.tgz -C /home/vagrant
+tar xvfz /home/synapse/files/patches.tgz -C /home/synapse
+tar xvfz /home/synapse/files/bf-sde-9.7.0.tgz -C /home/synapse
+tar xvfz /home/synapse/files/bf-reference-bsp-9.7.0.tgz -C /home/synapse
+tar xvfz /home/synapse/files/ica-tools.tgz -C /home/synapse
 
 cd bf-sde-9.7.0
 
@@ -21,13 +21,13 @@ echo "Y" | ./p4studio/p4studio dependencies install
                     switch p4rt thrift-switch thrift-driver \
                     sai '^tofino2m' '^tofino2h' bf-diags \
                     bfrt-generic-flags grpc tofino bsp \
-                    --bsp-path=/home/vagrant/files/bf-reference-bsp-9.7.0.tgz
+                    --bsp-path=/home/synapse/files/bf-reference-bsp-9.7.0.tgz
 
 ./p4studio/p4studio build
 
 patch -s -p0 < bf-sde-pkgsrc.patch
 
-echo "export SDE=/home/vagrant/bf-sde-9.7.0" >> ~/.profile
-echo "export SDE_INSTALL=/home/vagrant/bf-sde-9.7.0/install" >> ~/.profile
+echo "export SDE=/home/synapse/bf-sde-9.7.0" >> ~/.profile
+echo "export SDE_INSTALL=/home/synapse/bf-sde-9.7.0/install" >> ~/.profile
 
 echo "export PATH=$SDE_INSTALL/bin:\$PATH" >> ~/.zshrc
