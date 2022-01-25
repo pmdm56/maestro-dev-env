@@ -2,18 +2,18 @@
 
 set -euo pipefail
 
-pushd /home/synapse/workspace
+pushd /home/synapse/shared
     git clone https://github.com/fchamicapereira/vigor.git
     git clone https://github.com/fchamicapereira/vigor-klee.git klee
 popd
 
 pushd /home/synapse/vigor
-    ln -s /home/synapse/workspace/vigor vigor
+    ln -s /home/synapse/shared/vigor vigor
     chmod +x ./vigor/setup.sh
     ./vigor/setup.sh .
     
     rm -rf klee
-    ln -s /home/synapse/workspace/klee klee
+    ln -s /home/synapse/shared/klee klee
     pushd klee
         ./build.sh
     popd

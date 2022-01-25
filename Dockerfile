@@ -22,7 +22,7 @@ WORKDIR /home/synapse
 RUN mkdir /home/synapse/vigor
 RUN mkdir /home/synapse/scripts
 RUN mkdir /home/synapse/files
-RUN mkdir /home/synapse/workspace
+RUN mkdir /home/synapse/shared
 
 # Configure ssh directory
 RUN mkdir /home/synapse/.ssh
@@ -53,7 +53,6 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     -p https://github.com/zsh-users/zsh-autosuggestions \
     -p https://github.com/zsh-users/zsh-completions
 
-RUN echo "alias ws=\"cd ~/workspace\"" >> /home/synapse/.zshrc
 RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/synapse/.zshrc
 
 # Execute the setup scripts

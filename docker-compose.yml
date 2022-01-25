@@ -2,6 +2,6 @@ services:
     synapse:
         build: .
         volumes:
-            - $PWD/workspace:/home/synapse/workspace
+            - $PWD/shared:/home/synapse/shared
             - ~/.ssh:/home/synapse/.ssh:ro
         tty: true
