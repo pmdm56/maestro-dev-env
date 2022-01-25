@@ -5,15 +5,16 @@ Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu2004"
   config.vm.hostname = "synapse"
   config.vm.define "synapse"
-
+  
+  config.ssh.keep_alive = true
   config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "synapse"
     vb.gui = false
-    vb.memory = "4096"
-    vb.cpus = 2
+    vb.memory = "8192"
+    vb.cpus = 6
   end
 
   config.vm.provider "vmware_desktop" do |vb|

@@ -1,0 +1,7 @@
+services:
+    synapse:
+        build: .
+        volumes:
+            - $PWD/workspace:/home/synapse/workspace
+            - ~/.ssh:/home/synapse/.ssh:ro
+        tty: true
