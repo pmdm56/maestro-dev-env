@@ -31,4 +31,4 @@ patch -s -p0 < /home/synapse/files/bf-sde-pkgsrc.patch
 echo "export SDE=/home/synapse/bf-sde-9.7.0" >> ~/.profile
 echo "export SDE_INSTALL=/home/synapse/bf-sde-9.7.0/install" >> ~/.profile
 
-echo "export PATH=$SDE_INSTALL/bin:\$PATH" >> ~/.zshrc
+echo "export PATH=/home/synapse/bf-sde-9.7.0/install/bin:\$PATH" >> ~/.zshrc
