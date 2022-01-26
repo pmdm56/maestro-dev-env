@@ -22,4 +22,4 @@ tar -xzvf /home/synapse/files/cil.tar.gz -C /home/synapse/.opam/4.06.0/lib
 # Install graphviz for BDD visualization
 sudo apt install graphviz xdot -y
 
-RUN echo "source ~/.profile" >> /home/synapse/.zshrc
+echo "source ~/.profile" >> /home/synapse/.zshrc
