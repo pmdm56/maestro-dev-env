@@ -3,7 +3,7 @@
 set -e
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-OUT_DIR=~/workspace/bdds
+OUT_DIR=~/vigor/bdds
 REPORT=$SCRIPT_DIR/generate_bdds.report
 
 rm -f $REPORT > /dev/null 2>&1
@@ -33,5 +33,8 @@ generate_for_nf "vigbridge"
 generate_for_nf "vigfw"
 generate_for_nf "vignat"
 generate_for_nf "viglb"
+generate_for_nf "vighhh"
+generate_for_nf "vigpsd"
+generate_for_nf "vigcl"
 
 rm -f $REPORT > /dev/null 2>&1
