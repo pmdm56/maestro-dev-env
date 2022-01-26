@@ -1,5 +1,5 @@
 #!/usr/bin/bash
 
-mv ~/vigor/* ~/shared
-rmdir ~/vigor
+cp -r ~/vigor/* ~/shared/
+sudo rm -rf ~/vigor
 ln -s ~/shared ~/vigor
