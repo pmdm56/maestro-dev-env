@@ -40,7 +40,7 @@ COPY --chown=synapse:synapse ./cil.tar.gz /home/synapse/files/cil.tar.gz
 
 # Install some nice to have applications
 RUN sudo apt-get install -y man
-RUN sudo apt-get install -y build-essential wget git vim tzdata
+RUN sudo apt-get install -y build-essential wget git vim tzdata tmux iputils-ping
 RUN sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # Installing terminal sugar
