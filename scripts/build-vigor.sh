@@ -3,13 +3,13 @@
 set -euo pipefail
 
 pushd /home/synapse/vigor
-    git clone https://github.com/fchamicapereira/vigor.git
+    git clone https://github.com/luispedrosa/vigor.git
     
     chmod +x ./vigor/setup.sh
     ./vigor/setup.sh .
     
     rm -rf klee
-    git clone https://github.com/fchamicapereira/vigor-klee.git klee
+    git clone https://github.com/luispedrosa/vigor-klee.git klee
     
     pushd klee
         ./build.sh
