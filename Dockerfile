@@ -15,6 +15,9 @@ RUN useradd -m synapse \
     && adduser synapse sudo \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# Change root password
+RUN echo 'root:synapse' | chpasswd
+
 USER synapse
 WORKDIR /home/synapse
 
@@ -52,6 +55,9 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     -p git \
     -p https://github.com/zsh-users/zsh-autosuggestions \
     -p https://github.com/zsh-users/zsh-completions
+
+# Change default shell
+RUN sudo chsh -s $(which zsh) 
 
 RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/synapse/.zshrc
 
