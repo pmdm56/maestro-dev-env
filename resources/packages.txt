@@ -1,6 +1,7 @@
 man
 build-essential
 wget
+curl
 git
 vim
 tzdata

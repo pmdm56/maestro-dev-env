@@ -1,14 +1,42 @@
 version: "3.2"
 services:
-    synapse:
+    snap:
         build: .
+        image: snap
+        tty: true
+        privileged: true
+
+    vigor:
+        build:
+            context: .
+            dockerfile: Dockerfile.vigor
+        image: vigor
         volumes:
             - type: bind
               source: ./shared
-              target: /home/synapse/.shared
+              target: /home/snap/.shared
             - type: bind
               source: ~/.ssh
-              target: /home/synapse/.ssh
+              target: /home/snap/.ssh
+              read_only: true
+            - type: bind
+              source: /mnt/hugepages2M
+              target: /mnt/hugepages2M
+        tty: true
+        privileged: true
+
+    synapse:
+        build:
+            context: .
+            dockerfile: Dockerfile.synapse
+        image: synapse
+        volumes:
+            - type: bind
+              source: ./shared
+              target: /home/snap/.shared
+            - type: bind
+              source: ~/.ssh
+              target: /home/snap/.ssh
               read_only: true
             - type: bind
               source: /mnt/hugepages2M

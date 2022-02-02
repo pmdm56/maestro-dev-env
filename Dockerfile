@@ -1,3 +1,9 @@
+####################################################################
+#                                                                  #
+#                              SNAP                                #
+#                                                                  #
+####################################################################
+
 FROM ubuntu:focal
 
 # https://stackoverflow.com/questions/51023312/docker-having-issues-installing-apt-utils
@@ -10,42 +16,36 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y sudo
 
 # Create (-m == with a homedir) and use a user with passwordless sudo
-RUN useradd -m synapse \
-    && echo "synapse:synapse" | chpasswd \
-    && adduser synapse sudo \
+RUN useradd -m snap \
+    && echo "snap:snap" | chpasswd \
+    && adduser snap sudo \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Change root password
-RUN echo 'root:synapse' | chpasswd
+RUN echo 'root:snap' | chpasswd
 
-USER synapse
-WORKDIR /home/synapse
+USER snap
+WORKDIR /home/snap
 
 # Create workspace structure
-RUN mkdir /home/synapse/vigor
-RUN mkdir /home/synapse/scripts
-RUN mkdir /home/synapse/files
-RUN mkdir /home/synapse/shared
+RUN mkdir /home/snap/vigor
+RUN mkdir /home/snap/scripts
+RUN mkdir /home/snap/files
+RUN mkdir /home/snap/.shared
 
 # Configure ssh directory
-RUN mkdir /home/synapse/.ssh
-RUN chown -R synapse:synapse /home/synapse/.ssh
+RUN mkdir /home/snap/.ssh
+RUN chown -R snap:snap /home/snap/.ssh
 
-# Copy scripts into the workspace
-COPY --chown=synapse:synapse ./scripts /home/synapse/scripts
+# Copy scripts and files into the workspace
+COPY --chown=snap:snap ./scripts /home/snap/scripts
+COPY --chown=snap:snap ./resources /home/snap/files
 
-# Copy other required files
-COPY --chown=synapse:synapse ./patches.tgz /home/synapse/files/patches.tgz
-COPY --chown=synapse:synapse ./bf-sde-9.7.0.tgz /home/synapse/files/bf-sde-9.7.0.tgz
-COPY --chown=synapse:synapse ./bf-reference-bsp-9.7.0.tgz /home/synapse/files/bf-reference-bsp-9.7.0.tgz
-COPY --chown=synapse:synapse ./ica-tools.tgz /home/synapse/files/ica-tools.tgz
-COPY --chown=synapse:synapse ./cil.tar.gz /home/synapse/files/cil.tar.gz
-
-# Making scripts executable
-RUN chmod +x /home/synapse/scripts/*.sh
+# Make the scripts executable
+RUN chmod +x /home/snap/scripts/*.sh
 
 # Install some nice to have applications
-RUN /home/synapse/scripts/install-packages.sh
+RUN /home/snap/scripts/install-packages.sh
 RUN sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # Installing terminal sugar
@@ -60,11 +60,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 # Change default shell
 RUN sudo chsh -s $(which zsh) 
-RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/synapse/.zshrc
-
-RUN /home/synapse/scripts/build-vigor.sh
-# RUN /home/synapse/scripts/build-p4.sh
-# RUN /home/synapse/scripts/build-barefoot-sde.sh
+RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/snap/.zshrc
 
 # Setting up shared environment
-RUN echo "/home/synapse/scripts/setup-shared.sh" >> /home/synapse/.profile
+RUN echo "/home/snap/scripts/setup-shared.sh" >> /home/snap/.profile

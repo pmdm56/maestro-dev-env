@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-pushd /home/synapse/vigor
+pushd /home/snap/vigor
     git clone https://github.com/fchamicapereira/vigor.git
     
     chmod +x ./vigor/setup.sh
@@ -17,9 +17,9 @@ pushd /home/synapse/vigor
 popd
 
 # Fix missing cil package
-tar -xzvf /home/synapse/files/cil.tar.gz -C /home/synapse/.opam/4.06.0/lib
+tar -xzvf /home/snap/files/cil.tar.gz -C /home/snap/.opam/4.06.0/lib
 
 # Install graphviz for BDD visualization
-sudo apt install graphviz xdot -y
+sudo apt install graphviz -y
 
-echo "source ~/.profile" >> /home/synapse/.zshrc
+echo "source ~/.profile" >> /home/snap/.zshrc
