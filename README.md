@@ -17,7 +17,7 @@
 |  Access  |                 ``` $ docker-compose exec vigor zsh ```                |
 | Shutdown |                      ``` $ docker-compose down ```                     |
 
-## Hugepages
+### Hugepages
 
 To allocate hugepages on linux, just execute the `hugepages.sh` provided script:
 
