@@ -41,9 +41,11 @@ COPY --chown=synapse:synapse ./bf-reference-bsp-9.7.0.tgz /home/synapse/files/bf
 COPY --chown=synapse:synapse ./ica-tools.tgz /home/synapse/files/ica-tools.tgz
 COPY --chown=synapse:synapse ./cil.tar.gz /home/synapse/files/cil.tar.gz
 
+# Making scripts executable
+RUN chmod +x /home/synapse/scripts/*.sh
+
 # Install some nice to have applications
-RUN sudo apt-get install -y man
-RUN sudo apt-get install -y build-essential wget git vim tzdata tmux iputils-ping
+RUN /home/synapse/scripts/install-packages.sh
 RUN sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # Installing terminal sugar
@@ -58,12 +60,11 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 # Change default shell
 RUN sudo chsh -s $(which zsh) 
-
 RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/synapse/.zshrc
 
-# Execute the setup scripts
-RUN chmod +x /home/synapse/scripts/*.sh
-
 RUN /home/synapse/scripts/build-vigor.sh
-RUN /home/synapse/scripts/build-p4.sh
-RUN /home/synapse/scripts/build-barefoot-sde.sh
+# RUN /home/synapse/scripts/build-p4.sh
+# RUN /home/synapse/scripts/build-barefoot-sde.sh
+
+# Setting up shared environment
+RUN echo "/home/synapse/scripts/setup-shared.sh" >> /home/synapse/.profile

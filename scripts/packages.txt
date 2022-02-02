@@ -1,0 +1,14 @@
+man
+build-essential
+wget
+git
+vim
+tzdata
+tmux
+iputils-ping
+iproute2
+net-tools
+iperf
+psmisc
+htop
+gdb
