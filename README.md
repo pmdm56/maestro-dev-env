@@ -1,6 +1,6 @@
 # SNAP lab setup
 
-## First steps
+This is a repo
 
 1. **Install `docker` and `docker-compose`**
 
@@ -8,24 +8,10 @@
 
 ## Vigor
 
-### Cheat sheet
-
-|  Action  |                       Commands                |
-|:--------:|:---------------------------------------------:|
-|   Build  | ```$ docker-compose build vigor```            |
-|  Spin up |   ``` $ docker-compose up -d vigor ```        |
-|  Access  |  ``` $ docker-compose exec vigor zsh ```      |
-| Shutdown |       ``` $ docker-compose down ```           |
-
-### Hugepages
-
-To allocate hugepages on linux, just execute the `hugepages.sh` provided script:
-
-```
-$ sudo ./scripts/hugepages.sh
-```
-
-This will allocate 2M hugepages, mounted on `/mnt/hugepages2M`, and later shared with the vigor container.
+| Action |     Commands     |
+|:------:|:----------------:|
+|  Start | `./run-vigor.sh` |
+|  Stop  |  `./shutdown.sh` |
 
 ## SyNAPSE
 
@@ -37,14 +23,10 @@ This will allocate 2M hugepages, mounted on `/mnt/hugepages2M`, and later shared
 
 \* This is a confidential file provided by Intel. You can access it via the [SNAP wiki](https://snaplab.2y.net/InstallingTheTofinoSDE). 
 
-### Cheat sheet
-
-|  Action  |                       Commands                  |
-|:--------:|:-----------------------------------------------:|
-|   Build  | ```$ docker-compose build synapse```            |
-|  Spin up |   ``` $ docker-compose up -d synapse ```        |
-|  Access  |  ``` $ docker-compose exec synapse zsh ```      |
-| Shutdown |       ``` $ docker-compose down ```             |
+| Action |     Commands     |
+|:------:|:----------------:|
+|  Start | `./run-synapse.sh` |
+|  Stop  |  `./shutdown.sh` |
 
 ### Run p4 programs using the tofino model
 
