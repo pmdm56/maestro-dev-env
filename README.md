@@ -10,12 +10,12 @@
 
 ### Cheat sheet
 
-|  Action  |                                Commands                                |
-|:--------:|:----------------------------------------------------------------------:|
-|   Build  | ```$ docker-compose build snap```<br>```$ docker-compose build vigor``` |
-|  Spin up |                  ``` $ docker-compose up -d vigor ```                  |
-|  Access  |                 ``` $ docker-compose exec vigor zsh ```                |
-| Shutdown |                      ``` $ docker-compose down ```                     |
+|  Action  |                       Commands                |
+|:--------:|:---------------------------------------------:|
+|   Build  | ```$ docker-compose build vigor```            |
+|  Spin up |   ``` $ docker-compose up -d vigor ```        |
+|  Access  |  ``` $ docker-compose exec vigor zsh ```      |
+| Shutdown |       ``` $ docker-compose down ```           |
 
 ### Hugepages
 
@@ -39,12 +39,12 @@ This will allocate 2M hugepages, mounted on `/mnt/hugepages2M`, and later shared
 
 ### Cheat sheet
 
-|  Action  |                                Commands                                |
-|:--------:|:----------------------------------------------------------------------:|
-|   Build  |```$ docker-compose build snap```<br>```$ docker-compose build synapse```|
-|  Spin up |                  ``` $ docker-compose up -d synapse ```                  |
-|  Access  |                 ``` $ docker-compose exec synapse zsh ```                |
-| Shutdown |                      ``` $ docker-compose down ```                     |
+|  Action  |                       Commands                  |
+|:--------:|:-----------------------------------------------:|
+|   Build  | ```$ docker-compose build synapse```            |
+|  Spin up |   ``` $ docker-compose up -d synapse ```        |
+|  Access  |  ``` $ docker-compose exec synapse zsh ```      |
+| Shutdown |       ``` $ docker-compose down ```             |
 
 ### Run p4 programs using the tofino model
 
