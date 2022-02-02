@@ -9,6 +9,7 @@ tmux
 iputils-ping
 iproute2
 net-tools
+tcpreplay
 iperf
 psmisc
 htop

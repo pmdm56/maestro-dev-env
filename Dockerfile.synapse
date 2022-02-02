@@ -6,12 +6,11 @@
 
 FROM snap
 
-# Copy other required files
-COPY --chown=snap:snap ./patches.tgz /home/snap/files/patches.tgz
-COPY --chown=snap:snap ./bf-sde-9.7.0.tgz /home/snap/files/bf-sde-9.7.0.tgz
-COPY --chown=snap:snap ./bf-reference-bsp-9.7.0.tgz /home/snap/files/bf-reference-bsp-9.7.0.tgz
-COPY --chown=snap:snap ./ica-tools.tgz /home/snap/files/ica-tools.tgz
-COPY --chown=snap:snap ./cil.tar.gz /home/snap/files/cil.tar.gz
+# Check if required files were provided
+RUN test -f /home/snap/files/patches.tgz
+RUN test -f /home/snap/files/bf-sde-9.7.0.tgz
+RUN test -f /home/snap/files/bf-reference-bsp-9.7.0.tgz
+RUN test -f /home/snap/files/ica-tools.tgz
 
 RUN /home/snap/scripts/build-p4.sh
 RUN /home/snap/scripts/build-barefoot-sde.sh
