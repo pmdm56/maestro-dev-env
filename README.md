@@ -1,10 +1,9 @@
 # SNAP lab setup
 
-This is a repo
+## Dependencies
 
-1. **Install `docker` and `docker-compose`**
-
-2. **Setup the SNAP workspace.** After cloning this repository, execute the `scripts/init.sh` script: `$ ./scripts/init.sh`. This will create a `shared` folder in this repository directory, which will contain all the SNAP relevant projects and will be shared with the containers. It will also build the SNAP boilerplate container, from which all the other containers depend on. *This script should run only once.*
+ * `docker`
+ * `docker-compose`
 
 ## Vigor
 
