@@ -12,7 +12,7 @@
 
 |  Action  |                                Commands                                |
 |:--------:|:----------------------------------------------------------------------:|
-|   Build  | ``` $ docker-compose build snap <br \> $ docker-compose build vigor ``` |
+|   Build  | ```$ docker-compose build snap```<br>```$ docker-compose build vigor``` |
 |  Spin up |                  ``` $ docker-compose up -d vigor ```                  |
 |  Access  |                 ``` $ docker-compose exec vigor zsh ```                |
 | Shutdown |                      ``` $ docker-compose down ```                     |
@@ -41,7 +41,7 @@ This will allocate 2M hugepages, mounted on `/mnt/hugepages2M`, and later shared
 
 |  Action  |                                Commands                                |
 |:--------:|:----------------------------------------------------------------------:|
-|   Build  | ``` $ docker-compose build snap <br \> $ docker-compose build synapse ``` |
+|   Build  |```$ docker-compose build snap```<br>```$ docker-compose build synapse```|
 |  Spin up |                  ``` $ docker-compose up -d synapse ```                  |
 |  Access  |                 ``` $ docker-compose exec synapse zsh ```                |
 | Shutdown |                      ``` $ docker-compose down ```                     |
