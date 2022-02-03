@@ -4,7 +4,7 @@
 #                                                                  #
 ####################################################################
 
-FROM snap
+FROM vigor
 
 COPY --chown=snap:snap ./resources/patches.tgz /home/snap/files/patches.tgz
 COPY --chown=snap:snap ./resources/bf-sde-9.7.0.tgz /home/snap/files/bf-sde-9.7.0.tgz
