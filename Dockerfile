@@ -62,5 +62,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 RUN sudo chsh -s $(which zsh) 
 RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/snap/.zshrc
 
+# Use the provided tmux configuration
+RUN cp /home/snap/files/.tmux.conf /home/snap
+
 # Setting up shared environment
 RUN echo "/home/snap/scripts/setup-shared.sh" >> /home/snap/.profile
