@@ -7,3 +7,4 @@ ica-tools.tgz
 *.tgz
 
 shared
+hugepages2M

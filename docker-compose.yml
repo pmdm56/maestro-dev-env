@@ -20,7 +20,7 @@ services:
               target: /home/snap/.ssh
               read_only: true
             - type: bind
-              source: /mnt/hugepages2M
+              source: ./hugepages2M
               target: /mnt/hugepages2M
         tty: true
         privileged: true
