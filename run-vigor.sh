@@ -10,6 +10,9 @@ function setup {
 
     # Building SNAP container
     docker-compose build snap
+
+    # Building the vigor container
+    docker-compose build vigor
 }
 
 # Check if shared directory doesn't exist or is empty

@@ -13,6 +13,9 @@ function setup {
 
     # Building Vigor container
     docker-compose build vigor
+
+    # Building SyNAPSE container
+    docker-compose build synapse
 }
 
 # Check if shared directory doesn't exist or is empty
