@@ -16,5 +16,12 @@ mount -t hugetlbfs -o pagesize=2M none $HUGEPAGES
 # ~64 MB of hugepages
 su -c "echo 32 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages"
 
-echo "*********** /proc/meminfo content *********** "
-grep "Huge" /proc/meminfo
+allocated=$(grep "HugePages_Total" /proc/meminfo | awk '{print $2}')
+
+if [ "$allocated" -eq 0 ]; then
+  echo "Hugepage allocation failed"
+  echo "/proc/meminfo content:"
+  echo ""
+  grep "Huge" /proc/meminfo
+  echo ""
+fi
