@@ -7,3 +7,6 @@
 FROM snap
 
 RUN /home/snap/scripts/build-vigor.sh
+
+# Allocate hugepages (DPDK needs them)
+RUN sudo /home/snap/scripts/hugepages.sh

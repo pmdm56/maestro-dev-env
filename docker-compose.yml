@@ -19,9 +19,6 @@ services:
               source: ~/.ssh
               target: /home/snap/.ssh
               read_only: true
-            - type: bind
-              source: ./hugepages2M
-              target: /mnt/hugepages2M
         tty: true
         privileged: true
 
@@ -38,8 +35,5 @@ services:
               source: ~/.ssh
               target: /home/snap/.ssh
               read_only: true
-            - type: bind
-              source: /mnt/hugepages2M
-              target: /mnt/hugepages2M
         tty: true
         privileged: true

@@ -23,7 +23,5 @@ if [ ! -d $SCRIPT_DIR/shared ] || [ -z "$(ls -A $SCRIPT_DIR/shared)" ]; then
     setup
 fi
 
-sudo ./scripts/hugepages.sh
-
 docker-compose up -d synapse
 docker-compose exec synapse zsh
