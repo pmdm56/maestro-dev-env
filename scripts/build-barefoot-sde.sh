@@ -9,10 +9,10 @@ sudo apt install libcli-dev -y
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
 tar xvfz /home/snap/files/patches.tgz -C /home/snap/files
-tar xvfz /home/snap/files/bf-sde-9.7.0.tgz -C /home/snap/vigor
-tar xvfz /home/snap/files/ica-tools.tgz -C /home/snap/vigor
+tar xvfz /home/snap/files/bf-sde-9.7.0.tgz -C /home/snap
+tar xvfz /home/snap/files/ica-tools.tgz -C /home/snap
 
-cd /home/snap/vigor
+cd /home/snap
 
 patch -s -p0 < /home/snap/files/bf-sde-deps.patch
 
@@ -30,6 +30,6 @@ popd
 
 patch -s -p0 < /home/snap/files/bf-sde-pkgsrc.patch
 
-echo "export SDE=/home/snap/vigor/bf-sde-9.7.0" >> ~/.profile
-echo "export SDE_INSTALL=/home/snap/vigor/bf-sde-9.7.0/install" >> ~/.profile
-echo "export PATH=/home/snap/vigor/bf-sde-9.7.0/install/bin:\$PATH" >> ~/.zshrc
+echo "export SDE=/home/snap/bf-sde-9.7.0" >> ~/.profile
+echo "export SDE_INSTALL=/home/snap/bf-sde-9.7.0/install" >> ~/.profile
+echo "export PATH=/home/snap/bf-sde-9.7.0/install/bin:\$PATH" >> ~/.zshrc
