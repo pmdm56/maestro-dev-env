@@ -16,6 +16,10 @@ services:
               source: ./shared
               target: /home/snap/.shared
             - type: bind
+              source: ~/.gitconfig
+              target: /home/snap/.gitconfig
+              read_only: true
+            - type: bind
               source: ~/.ssh
               target: /home/snap/.ssh
               read_only: true
@@ -31,6 +35,10 @@ services:
             - type: bind
               source: ./shared
               target: /home/snap/.shared
+            - type: bind
+              source: ~/.gitconfig
+              target: /home/snap/.gitconfig
+              read_only: true
             - type: bind
               source: ~/.ssh
               target: /home/snap/.ssh
