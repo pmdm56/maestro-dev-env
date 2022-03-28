@@ -21,7 +21,7 @@ pushd bf-sde-9.7.0
 
     ./p4studio/p4studio configure thrift-diags '^tofino2' bfrt \
                         switch p4rt thrift-switch thrift-driver \
-                        sai '^tofino2m' '^tofino2h' bf-diags \
+                        sai '^tofino2m' '^tofino2h' bf-diags cpuveth \
                         bfrt-generic-flags grpc tofino bsp \
                         --bsp-path=/home/snap/files/bf-reference-bsp-9.7.0.tgz
 
