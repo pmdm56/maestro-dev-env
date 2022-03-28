@@ -43,5 +43,9 @@ services:
               source: ~/.ssh
               target: /home/snap/.ssh
               read_only: true
+            - ~/.Xauthority:/home/snap/.Xauthority
+        environment:
+            DISPLAY: $DISPLAY
+        network_mode: "host"
         tty: true
         privileged: true
