@@ -27,6 +27,7 @@ function generate_for_nf {
 }
 
 generate_for_nf "vignop"
+generate_for_nf "vigfwd"
 generate_for_nf "vigpol"
 generate_for_nf "vigbridge-static"
 generate_for_nf "vigbridge"
