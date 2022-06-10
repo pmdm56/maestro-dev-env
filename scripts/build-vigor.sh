@@ -2,7 +2,11 @@
 
 set -euo pipefail
 
-pushd /home/snap/vigor
+WORKSPACE=/home/snap/workspace
+
+mkdir -p $WORKSPACE/vigor
+
+pushd $WORKSPACE/vigor
     git clone https://github.com/fchamicapereira/vigor.git
     
     chmod +x ./vigor/setup.sh
@@ -17,9 +21,9 @@ pushd /home/snap/vigor
 popd
 
 # Fix missing cil package
-tar -xzvf /home/snap/files/cil.tar.gz -C /home/snap/.opam/4.06.0/lib
+tar -xzvf /opt/files/cil.tar.gz -C /home/snap/.opam/4.06.0/lib
 
 # Install graphviz for BDD visualization
 sudo apt install graphviz -y
 
-echo "source ~/.profile" >> /home/snap/.zshrc
+echo "alias vigor=\"cd $WORKSPACE/vigor\"" >> /home/snap/.zshrc

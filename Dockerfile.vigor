@@ -6,4 +6,4 @@
 
 FROM snap
 
-RUN /home/snap/scripts/build-vigor.sh
+RUN /opt/scripts/build-vigor.sh

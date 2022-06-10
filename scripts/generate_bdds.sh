@@ -2,8 +2,10 @@
 
 set -e
 
+WORKSPACE=/home/snap/workspace
+
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-OUT_DIR=~/vigor/bdds
+OUT_DIR=$WORKSPACE/bdds
 REPORT=$SCRIPT_DIR/generate_bdds.report
 
 rm -f $REPORT > /dev/null 2>&1

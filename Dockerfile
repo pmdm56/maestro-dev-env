@@ -25,27 +25,34 @@ RUN useradd -m snap \
 RUN echo 'root:snap' | chpasswd
 
 USER snap
-WORKDIR /home/snap
+WORKDIR /home/snap/workspace
 
 # Create workspace structure
-RUN mkdir /home/snap/vigor
-RUN mkdir /home/snap/scripts
-RUN mkdir /home/snap/files
-RUN mkdir /home/snap/.shared
+RUN sudo chown -R snap:snap /home/snap/workspace
+
+RUN sudo mkdir /opt/scripts
+RUN sudo mkdir /opt/files
+
+RUN sudo chown -R snap:snap /opt/scripts
+RUN sudo chown -R snap:snap /opt/files
+
+# Create the shared folder
+RUN sudo mkdir /shared
+RUN sudo chown -R snap:snap /shared
 
 # Configure ssh directory
 RUN mkdir /home/snap/.ssh
 RUN chown -R snap:snap /home/snap/.ssh
 
 # Copy scripts and files into the workspace
-COPY --chown=snap:snap ./scripts /home/snap/scripts
-COPY --chown=snap:snap ./resources /home/snap/files
+COPY --chown=snap:snap ./scripts /opt/scripts
+COPY --chown=snap:snap ./resources /opt/files
 
 # Make the scripts executable
-RUN chmod +x /home/snap/scripts/*.sh
+RUN chmod +x /opt/scripts/*.sh
 
 # Install some nice to have applications
-RUN /home/snap/scripts/install-packages.sh
+RUN /opt/scripts/install-packages.sh
 RUN sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # Installing terminal sugar
@@ -60,10 +67,11 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 # Change default shell
 RUN sudo chsh -s $(which zsh) 
-RUN echo "alias vigor=\"cd ~/vigor\"" >> /home/snap/.zshrc
 
 # Use the provided tmux configuration
-RUN cp /home/snap/files/.tmux.conf /home/snap
+RUN cp /opt/files/.tmux.conf /home/snap
 
 # Setting up shared environment
-RUN echo "/home/snap/scripts/setup-shared.sh" >> /home/snap/.profile
+RUN echo "/opt/scripts/setup-shared.sh" >> /home/snap/.profile
+RUN echo "source ~/.profile" >> /home/snap/.zshrc
+RUN echo "cd /home/snap/workspace" >> /home/snap/.zshrc

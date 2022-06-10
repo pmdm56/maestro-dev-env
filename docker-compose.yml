@@ -3,6 +3,18 @@ services:
     snap:
         build: .
         image: snap
+        volumes:
+            - type: bind
+              source: ./shared
+              target: /shared
+            - type: bind
+              source: ~/.gitconfig
+              target: /home/snap/.gitconfig
+              read_only: true
+            - type: bind
+              source: ~/.ssh
+              target: /home/snap/.ssh
+              read_only: true
         tty: true
         privileged: true
 
@@ -14,7 +26,7 @@ services:
         volumes:
             - type: bind
               source: ./shared
-              target: /home/snap/.shared
+              target: /shared
             - type: bind
               source: ~/.gitconfig
               target: /home/snap/.gitconfig
@@ -34,7 +46,7 @@ services:
         volumes:
             - type: bind
               source: ./shared
-              target: /home/snap/.shared
+              target: /shared
             - type: bind
               source: ~/.gitconfig
               target: /home/snap/.gitconfig

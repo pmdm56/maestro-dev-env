@@ -6,10 +6,10 @@
 
 FROM vigor
 
-COPY --chown=snap:snap ./resources/patches.tgz /home/snap/files/patches.tgz
-COPY --chown=snap:snap ./resources/bf-sde-9.7.0.tgz /home/snap/files/bf-sde-9.7.0.tgz
-COPY --chown=snap:snap ./resources/bf-reference-bsp-9.7.0.tgz /home/snap/files/bf-reference-bsp-9.7.0.tgz
-COPY --chown=snap:snap ./resources/ica-tools.tgz /home/snap/files/ica-tools.tgz
+COPY --chown=snap:snap ./resources/patches.tgz /opt/files/patches.tgz
+COPY --chown=snap:snap ./resources/bf-sde-9.7.0.tgz /opt/files/bf-sde-9.7.0.tgz
+COPY --chown=snap:snap ./resources/bf-reference-bsp-9.7.0.tgz /opt/files/bf-reference-bsp-9.7.0.tgz
+COPY --chown=snap:snap ./resources/ica-tools.tgz /opt/files/ica-tools.tgz
 
-RUN /home/snap/scripts/build-p4.sh
-RUN /home/snap/scripts/build-barefoot-sde.sh
+RUN /opt/scripts/build-p4.sh
+RUN /opt/scripts/build-barefoot-sde.sh

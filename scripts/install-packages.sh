@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-xargs sudo apt-get -y install </home/snap/files/packages.txt
+xargs sudo apt-get -y install </opt/files/packages.txt

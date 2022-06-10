@@ -12,12 +12,6 @@ function setup {
 
     # Building SNAP container
     docker-compose build snap
-
-    # Building Vigor container
-    docker-compose build vigor
-
-    # Building SyNAPSE container
-    docker-compose build synapse
 }
 
 # Check if shared directory doesn't exist or is empty
@@ -25,5 +19,5 @@ if [ ! -d $SCRIPT_DIR/shared ] || [ -z "$(ls -A $SCRIPT_DIR/shared)" ]; then
     setup
 fi
 
-docker-compose up -d synapse
-docker-compose exec synapse zsh
+docker-compose up -d snap
+docker-compose exec snap zsh
