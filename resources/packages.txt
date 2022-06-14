@@ -14,3 +14,5 @@ iperf
 psmisc
 htop
 gdb
+xdot
+xdg-utils
