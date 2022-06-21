@@ -22,7 +22,7 @@ function generate_for_nf {
     echo "[$nf_name] Generating BDD"
     cd $KLEE_DIR
     ./build.sh >> $REPORT 2>&1
-    ./build/bin/call-paths-to-bdd $VIGOR_DIR/vigor/$nf_name/klee-last/*call_path \
+    ./Release/bin/call-paths-to-bdd $VIGOR_DIR/vigor/$nf_name/klee-last/*call_path \
         -out $OUT_DIR/$nf_name.bdd -gv $OUT_DIR/$nf_name.gv >> $REPORT 2>&1
     
     echo "[$nf_name] Done"
