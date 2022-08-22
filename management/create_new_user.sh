@@ -62,7 +62,7 @@ echo "Creating user..."
 password=`dd if=/dev/urandom bs=1 count=12 2>/dev/null | base64 -w 0 | rev | cut -b 2- | rev`
 
 for machine in ${machines[*]}; do
-  ssh -t $machine "sudo useradd -s /bin/bash -m -G sudo,docker $username && \
+  ssh -t $machine "sudo useradd -s /bin/bash -m -G sudo,docker,admin $username && \
     echo '$username:$password' | sudo chpasswd"
   ret=$?
 
