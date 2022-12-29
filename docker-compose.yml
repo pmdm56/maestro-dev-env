@@ -1,48 +1,8 @@
 version: "3.2"
 services:
-    snap:
+    maestro:
         build: .
-        image: snap
-        volumes:
-            - type: bind
-              source: ./shared
-              target: /shared
-            - type: bind
-              source: ~/.gitconfig
-              target: /home/snap/.gitconfig
-              read_only: true
-            - type: bind
-              source: ~/.ssh
-              target: /home/snap/.ssh
-              read_only: true
-        tty: true
-        privileged: true
-
-    vigor:
-        build:
-            context: .
-            dockerfile: Dockerfile.vigor
-        image: vigor
-        volumes:
-            - type: bind
-              source: ./shared
-              target: /shared
-            - type: bind
-              source: ~/.gitconfig
-              target: /home/snap/.gitconfig
-              read_only: true
-            - type: bind
-              source: ~/.ssh
-              target: /home/snap/.ssh
-              read_only: true
-        tty: true
-        privileged: true
-
-    synapse:
-        build:
-            context: .
-            dockerfile: Dockerfile.synapse
-        image: synapse
+        image: maestro
         volumes:
             - type: bind
               source: ./shared

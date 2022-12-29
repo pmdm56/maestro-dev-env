@@ -17,7 +17,7 @@ function save {
 }
 
 save "vigor"
-save "synapse"
+save "maestro"
 
 # Bringing containers down
 docker-compose down > /dev/null 2>&1

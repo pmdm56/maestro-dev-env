@@ -12,7 +12,7 @@
 |  Start | `./run-vigor.sh` |
 |  Stop  |  `./shutdown.sh` |
 
-## SyNAPSE
+## maestro
 
 ### Dependencies:
   * `patches.tgz` \*
@@ -24,7 +24,7 @@
 
 | Action |     Commands     |
 |:------:|:----------------:|
-|  Start | `./run-synapse.sh` |
+|  Start | `./run-maestro.sh` |
 |  Stop  |  `./shutdown.sh` |
 
 ### Run p4 programs using the tofino model

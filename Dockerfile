@@ -1,6 +1,6 @@
 ####################################################################
 #                                                                  #
-#                              SNAP                                #
+#                              samwise                                #
 #                                                                  #
 ####################################################################
 
@@ -16,62 +16,70 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y sudo
 
 # Create (-m == with a homedir) and use a user with passwordless sudo
-RUN useradd -m snap \
-    && echo "snap:snap" | chpasswd \
-    && adduser snap sudo \
+RUN useradd -m samwise \
+    && echo "samwise:samwise" | chpasswd \
+    && adduser samwise sudo \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Change root password
-RUN echo 'root:snap' | chpasswd
+RUN echo 'root:samwise' | chpasswd
 
-USER snap
-WORKDIR /home/snap/workspace
+USER samwise
+WORKDIR /home/samwise/workspace
 
 # Create workspace structure
-RUN sudo chown -R snap:snap /home/snap/workspace
-
-RUN sudo mkdir /opt/scripts
-RUN sudo mkdir /opt/files
-
-RUN sudo chown -R snap:snap /opt/scripts
-RUN sudo chown -R snap:snap /opt/files
+RUN sudo chown -R samwise:samwise /home/samwise/workspace
 
 # Create the shared folder
 RUN sudo mkdir /shared
-RUN sudo chown -R snap:snap /shared
+RUN sudo chown -R samwise:samwise /shared
 
 # Configure ssh directory
-RUN mkdir /home/snap/.ssh
-RUN chown -R snap:snap /home/snap/.ssh
-
-# Copy scripts and files into the workspace
-COPY --chown=snap:snap ./scripts /opt/scripts
-COPY --chown=snap:snap ./resources /opt/files
-
-# Make the scripts executable
-RUN chmod +x /opt/scripts/*.sh
+RUN mkdir /home/samwise/.ssh
+RUN chown -R samwise:samwise /home/samwise/.ssh
 
 # Install some nice to have applications
-RUN /opt/scripts/install-packages.sh
+RUN sudo apt-get update
+RUN sudo apt-get -y install \
+    man \
+    build-essential \
+    wget \
+    curl \
+    git \
+    vim \
+    tzdata \
+    tmux \
+    iputils-ping \
+    iproute2 \
+    net-tools \
+    tcpreplay \
+    iperf \
+    psmisc \
+    htop \
+    gdb \
+    xdot \
+    xdg-utils \
+    libcanberra-gtk-module \
+    libcanberra-gtk3-module \
+    zsh
+
 RUN sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # Installing terminal sugar
-# Uses "Spaceship" theme with some customization. Uses some bundled plugins and installs some more from github
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.2/zsh-in-docker.sh)" -- \
-    -t https://github.com/denysdovhan/spaceship-prompt \
-    -a 'SPACESHIP_PROMPT_ADD_NEWLINE="false"' \
-    -a 'SPACESHIP_PROMPT_SEPARATE_LINE="false"' \
-    -p git \
-    -p https://github.com/zsh-users/zsh-autosuggestions \
-    -p https://github.com/zsh-users/zsh-completions
+RUN curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 
 # Change default shell
 RUN sudo chsh -s $(which zsh) 
 
-# Use the provided tmux configuration
-RUN cp /opt/files/.tmux.conf /home/snap
-
 # Setting up shared environment
-RUN echo "/opt/scripts/setup-shared.sh" >> /home/snap/.profile
-RUN echo "source ~/.profile" >> /home/snap/.zshrc
-RUN echo "cd /home/snap/workspace" >> /home/snap/.zshrc
+COPY --chown=samwise:samwise ./setup-shared.sh /opt/setup-shared.sh
+RUN chmod +x /opt/setup-shared.sh
+
+RUN echo "/opt/setup-shared.sh" >> /home/samwise/.profile
+RUN echo "source ~/.profile" >> /home/samwise/.zshrc
+RUN echo "cd /home/samwise/workspace" >> /home/samwise/.zshrc
+
+RUN git clone https://github.com/fchamicapereira/maestro.git
+
+RUN chmod +x ./maestro/setup.sh
+# RUN cd maestro && ./setup.sh
