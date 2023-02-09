@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM --platform=linux/amd64 ubuntu:focal
 
 # https://stackoverflow.com/questions/51023312/docker-having-issues-installing-apt-utils
 ARG DEBIAN_FRONTEND=noninteractive
