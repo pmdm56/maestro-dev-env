@@ -68,7 +68,7 @@ RUN echo "/opt/setup-shared.sh" >> /home/docker/.profile
 RUN echo "source ~/.profile" >> /home/docker/.zshrc
 RUN echo "cd /home/docker/workspace" >> /home/docker/.zshrc
 
-RUN git clone https://github.com/fchamicapereira/maestro.git
+RUN git clone https://github.com/pmdm56/maestro.git
 RUN chmod +x ./maestro/setup.sh
 RUN cd maestro && ./setup.sh
 
